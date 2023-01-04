@@ -39,4 +39,14 @@ contract Lottery {
         return players;
     }
 
+    function pickWinner() public restricted {
+        // Compute the random index of the winner
+        uint index = random() % players.length;
+
+        // Transfer the total amount to the winner
+        players[index].transfer(address(this).balance);
+
+        // Empty the list of players
+        players = new address payable[](0);
+    }
 }
