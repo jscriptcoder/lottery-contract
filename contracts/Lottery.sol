@@ -15,7 +15,7 @@ contract Lottery {
     // Enforces a minimun amount of ether to be sent to a function
     modifier minimum(uint value) {
         string memory requiredMsg = string.concat("The minimum value required is ", Strings.toString(value));
-        require(msg.value > value, requiredMsg);
+        require(msg.value >= value, requiredMsg);
         _;
     }
 
