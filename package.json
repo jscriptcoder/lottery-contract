@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "mocha"
+    "generate-types": "typechain --target=truffle-v5 'build/contracts/*.json'",
+    "migrate": "tsc -p ./tsconfig.migrate.json --outDir ./migrations && truffle migrate",
+    "typecheck": "truffle compile && npm run generate-types && tsc --noEmit",
+    "test": "truffle test"
   },
   "dependencies": {
     "@next/font": "13.1.1",
