@@ -6,28 +6,40 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "mocha"
   },
   "dependencies": {
     "@next/font": "13.1.1",
     "@openzeppelin/contracts": "^4.8.0",
-    "@types/node": "18.11.18",
-    "@types/react": "18.0.26",
-    "@types/react-dom": "18.0.10",
-    "eslint": "8.30.0",
-    "eslint-config-next": "13.1.1",
+    "@truffle/hdwallet-provider": "^2.1.4",
     "next": "13.1.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "typescript": "4.9.4"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@typechain/truffle-v5": "^8.0.2",
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.11.18",
+    "@types/react": "18.0.26",
+    "@types/react-dom": "18.0.10",
     "autoprefixer": "^10.4.13",
+    "dotenv": "^16.0.3",
+    "eslint": "8.30.0",
+    "eslint-config-next": "13.1.1",
+    "ganache-cli": "^6.12.2",
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
+    "mocha": "^10.2.0",
     "postcss": "^8.4.20",
     "prettier": "2.8.1",
-    "tailwindcss": "^3.2.4"
+    "solc": "^0.8.17",
+    "tailwindcss": "^3.2.4",
+    "truffle": "^5.7.1",
+    "ts-node": "^10.9.1",
+    "typechain": "^8.1.1",
+    "typescript": "^4.9.4"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
