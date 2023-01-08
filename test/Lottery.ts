@@ -115,12 +115,10 @@ contract('Lottery', (accounts) => {
     // Let's grab the event "WinnerPicked" emitted where
     // we have the details of this transaction
     const { logs } = tx
-
     assert.ok(Array.isArray(logs))
     assert.equal(logs.length, 1)
 
     const log = logs[0]
-
     assert.equal(log.event, 'WinnerPicked')
 
     const index = parseInt(log.args.index.toString(10), 10)
@@ -131,7 +129,6 @@ contract('Lottery', (accounts) => {
 
     // Make sure the list of players is empty
     const players = await lottery.getPlayers()
-
     assert.equal(0, players.length)
   })
 })
