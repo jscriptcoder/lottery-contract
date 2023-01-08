@@ -128,5 +128,10 @@ contract('Lottery', (accounts) => {
 
     assert.equal(prize, 0.09) // 0.02 + 0.03 + 0.04
     assert.equal(accounts[index], log.args.winner)
+
+    // Make sure the list of players is empty
+    const players = await lottery.getPlayers()
+
+    assert.equal(0, players.length)
   })
 })

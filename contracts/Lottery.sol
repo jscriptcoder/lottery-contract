@@ -7,6 +7,7 @@ contract Lottery {
     address public owner;
     address payable[] public players;
 
+    // We use it to emit some details about the pickWinner transaction
     event WinnerPicked(
         uint index,
         uint prize,
