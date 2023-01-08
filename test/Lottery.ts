@@ -89,4 +89,37 @@ contract('Lottery', (accounts) => {
       assert.ok(err, 'Exception "Not the owner" has been raised')
     }
   })
+
+  it('sends money to the winner and resets the players array', async () => {
+    const lottery = await Lottery.new()
+
+    await lottery.enter({
+      from: accounts[0],
+      value: web3.utils.toWei('0.02', 'ether'),
+    })
+
+    await lottery.enter({
+      from: accounts[1],
+      value: web3.utils.toWei('0.03', 'ether'),
+    })
+
+    await lottery.enter({
+      from: accounts[2],
+      value: web3.utils.toWei('0.04', 'ether'),
+    })
+
+    const {
+      0: _index,
+      1: _prize,
+      2: winnder,
+    } = await lottery.pickWinner.call({
+      from: accounts[0],
+    })
+
+    const index = parseInt(_index.toString(10), 10)
+    const prize = parseFloat(web3.utils.fromWei(_prize.toString(10))) // in ether
+
+    assert.equal(prize, 0.09) // 0.02 + 0.03 + 0.04
+    assert.equal(accounts[index], winnder)
+  })
 })
