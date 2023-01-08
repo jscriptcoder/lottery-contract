@@ -108,18 +108,25 @@ contract('Lottery', (accounts) => {
       value: web3.utils.toWei('0.04', 'ether'),
     })
 
-    const {
-      0: _index,
-      1: _prize,
-      2: winnder,
-    } = await lottery.pickWinner.call({
+    const tx = await lottery.pickWinner({
       from: accounts[0],
     })
 
-    const index = parseInt(_index.toString(10), 10)
-    const prize = parseFloat(web3.utils.fromWei(_prize.toString(10))) // in ether
+    // Let's grab the event "WinnerPicked" emitted where
+    // we have the details of this transaction
+    const { logs } = tx
+
+    assert.ok(Array.isArray(logs))
+    assert.equal(logs.length, 1)
+
+    const log = logs[0]
+
+    assert.equal(log.event, 'WinnerPicked')
+
+    const index = parseInt(log.args.index.toString(10), 10)
+    const prize = parseFloat(web3.utils.fromWei(log.args.prize.toString(10))) // in ether
 
     assert.equal(prize, 0.09) // 0.02 + 0.03 + 0.04
-    assert.equal(accounts[index], winnder)
+    assert.equal(accounts[index], log.args.winner)
   })
 })

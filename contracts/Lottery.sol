@@ -6,6 +6,12 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 contract Lottery {
     address public owner;
     address payable[] public players;
+
+    event WinnerPicked(
+        uint index,
+        uint prize,
+        address winner
+    );
     
     constructor() {
         // Address of the person deploying the contract
@@ -39,7 +45,7 @@ contract Lottery {
         return players;
     }
 
-    function pickWinner() public restricted returns (uint, uint, address) {
+    function pickWinner() public restricted {
         // Compute the (pseudo)random index of the winner
         uint index = random() % players.length;
         
@@ -52,6 +58,11 @@ contract Lottery {
         // Empty the list of players
         players = new address payable[](0);
 
-        return (index, prize, winner);
+        // Emit event with details of the result
+        emit WinnerPicked(
+            index,
+            prize,
+            winner
+        );
     }
 }

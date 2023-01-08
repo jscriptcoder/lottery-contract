@@ -9,7 +9,19 @@ export interface LotteryContract extends Truffle.Contract<LotteryInstance> {
   'new'(meta?: Truffle.TransactionDetails): Promise<LotteryInstance>
 }
 
-type AllEvents = never
+export interface WinnerPicked {
+  name: 'WinnerPicked'
+  args: {
+    index: BN
+    prize: BN
+    winner: string
+    0: BN
+    1: BN
+    2: string
+  }
+}
+
+type AllEvents = WinnerPicked
 
 export interface LotteryInstance extends Truffle.ContractInstance {
   owner(txDetails?: Truffle.TransactionDetails): Promise<string>
@@ -34,9 +46,7 @@ export interface LotteryInstance extends Truffle.ContractInstance {
     (txDetails?: Truffle.TransactionDetails): Promise<
       Truffle.TransactionResponse<AllEvents>
     >
-    call(
-      txDetails?: Truffle.TransactionDetails,
-    ): Promise<{ 0: BN; 1: BN; 2: string }>
+    call(txDetails?: Truffle.TransactionDetails): Promise<void>
     sendTransaction(txDetails?: Truffle.TransactionDetails): Promise<string>
     estimateGas(txDetails?: Truffle.TransactionDetails): Promise<number>
   }
@@ -64,9 +74,7 @@ export interface LotteryInstance extends Truffle.ContractInstance {
       (txDetails?: Truffle.TransactionDetails): Promise<
         Truffle.TransactionResponse<AllEvents>
       >
-      call(
-        txDetails?: Truffle.TransactionDetails,
-      ): Promise<{ 0: BN; 1: BN; 2: string }>
+      call(txDetails?: Truffle.TransactionDetails): Promise<void>
       sendTransaction(txDetails?: Truffle.TransactionDetails): Promise<string>
       estimateGas(txDetails?: Truffle.TransactionDetails): Promise<number>
     }
