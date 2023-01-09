@@ -1,19 +1,19 @@
 import { MoneyCollectOutlined } from '@ant-design/icons'
-import { Layout, Button } from 'antd'
-import useHeader from './useHeader'
+import { Layout } from 'antd'
+import ConnectButton from '../ConnectButton'
 
-export default function Header() {
-  const { buttonLabel, isConnected, clickConnect } = useHeader()
+interface HeaderProps {
+  title: string
+}
 
+export default function Header({ title }: HeaderProps) {
   return (
     <Layout.Header className="flex justify-between items-center">
       <div className="space-x-2 flex items-center">
         <MoneyCollectOutlined className="text-3xl" />
-        <span className="text-2xl">Lottery Contract</span>
+        <span className="text-2xl">{title}</span>
       </div>
-      <Button onClick={clickConnect} disabled={isConnected}>
-        {buttonLabel}
-      </Button>
+      <ConnectButton label="Connect to a Wallet" />
     </Layout.Header>
   )
 }

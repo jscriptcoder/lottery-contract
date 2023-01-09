@@ -1,9 +1,7 @@
 import Web3 from 'web3'
-import { networks } from '../truffle-config'
 import lotteryConfig from '../build/contracts/Lottery.json'
 
-const { development } = networks
-const devProvider = `http://${development.host}:${development.port}`
+const devProvider = 'http://127.0.0.1:7545'
 
 const CONTRACT_ADDRESS = lotteryConfig.networks[5777].address
 const CONTRACT_ABI = lotteryConfig.abi as unknown as AbiItem
