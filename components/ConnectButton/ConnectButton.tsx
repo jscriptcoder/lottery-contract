@@ -1,4 +1,4 @@
-import { Button, Tooltip } from 'antd'
+import { Button, Modal, Spin, Tooltip } from 'antd'
 import useConnectButton from './useConnectButton'
 
 interface ConnectButtonProps {
@@ -6,7 +6,8 @@ interface ConnectButtonProps {
 }
 
 export default function ConnectButton({ label }: ConnectButtonProps) {
-  const { isConnected, walletAddress, clickConnect } = useConnectButton()
+  const { connecting, isConnected, walletAddress, clickConnect } =
+    useConnectButton()
 
   const ButtonContent = isConnected ? (
     <Tooltip
@@ -25,8 +26,20 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
   )
 
   return (
-    <Button onClick={clickConnect} className="max-w-[200px]">
-      {ButtonContent}
-    </Button>
+    <div>
+      <Button onClick={clickConnect} className="max-w-[200px]">
+        {ButtonContent}
+      </Button>
+      <Modal
+        open={connecting}
+        footer={null}
+        closable={false}
+        title="Connecting to a wallet..."
+      >
+        <div className="p-4 text-center">
+          <Spin size="large" tip="Please wait" />
+        </div>
+      </Modal>
+    </div>
   )
 }
