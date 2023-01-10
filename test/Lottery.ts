@@ -1,3 +1,4 @@
+// @ts-ignore
 const Lottery = artifacts.require('Lottery')
 
 contract('Lottery', (accounts) => {

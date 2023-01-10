@@ -17,6 +17,6 @@
     "types": ["@types/node", "@types/chai", "@types/mocha"],
     "typeRoots": ["./node_modules/@types", "./types"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "test/Lottery.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "build", "cache", "artifacts"]
 }
