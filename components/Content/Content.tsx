@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { Layout, Typography } from 'antd'
 import useContent from './useContent'
-import EtherIcon from '../EtherIcon'
 import { LoginOutlined } from '@ant-design/icons'
 
 export default function Content() {
