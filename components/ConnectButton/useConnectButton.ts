@@ -1,6 +1,7 @@
+import { notification } from 'antd'
 import { useCallback, useMemo, useState } from 'react'
 import { useWalletContext } from '../../state/Wallet'
-import { web3 } from '../../utils/web3'
+import { requestAccounts } from '../../utils/lotteryContract'
 
 export default function useConnectButton() {
   const [connecting, setConnecting] = useState(false)
@@ -13,10 +14,20 @@ export default function useConnectButton() {
       setConnecting(true)
 
       try {
-        const accounts = await web3.eth.requestAccounts()
+        const accounts = await requestAccounts()
         setWalletState(accounts[0])
 
-        // const balance = await web3.eth.getBalance(accounts[0])
+        notification.success({
+          message: 'Successful connection.',
+          description: `Your wallet is now connected.`,
+        })
+      } catch (err) {
+        console.error(err)
+
+        notification.error({
+          message: 'Something went wrong',
+          description: `${err}`,
+        })
       } finally {
         setConnecting(false)
       }
