@@ -13,7 +13,7 @@ export default function Header({ title }: HeaderProps) {
         <MoneyCollectOutlined className="text-3xl" />
         <span className="text-2xl">{title}</span>
       </div>
-      <ConnectButton label="Connect to a Wallet" />
+      <ConnectButton label="Connect to your wallet" />
     </Layout.Header>
   )
 }

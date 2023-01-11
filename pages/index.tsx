@@ -5,7 +5,13 @@ import Content from '../components/Content'
 import { WalletContextProvider } from '../state/Wallet'
 
 const { darkAlgorithm } = theme
-const darkTheme = { algorithm: darkAlgorithm }
+const darkTheme = {
+  algorithm: darkAlgorithm,
+  token: {
+    colorPrimary: '#87cefb',
+    colorLinkHover: '#87cefb',
+  },
+}
 
 export default function Index() {
   return (

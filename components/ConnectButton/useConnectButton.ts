@@ -15,6 +15,8 @@ export default function useConnectButton() {
       try {
         const accounts = await web3.eth.requestAccounts()
         setWalletState(accounts[0])
+
+        // const balance = await web3.eth.getBalance(accounts[0])
       } finally {
         setConnecting(false)
       }

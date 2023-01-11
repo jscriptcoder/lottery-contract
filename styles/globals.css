@@ -52,8 +52,8 @@
   }
 
   .text-neon {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fe6839,
-      0 0 30px #fe6839, 0 0 40px #fe6839, 0 0 55px #fe6839, 0 0 75px #fe6839;
+    text-shadow: 0 0 5px #fff, 0 0 5px #fff, 0 0 5px #fff, 0 0 20px #fe6839,
+      0 0 30px #fe6839, 0 0 40px #fe6839, 0 0 50px #fe6839, 0 0 60px #fe6839;
 
     @apply text-[#FFF]/[.85];
   }

@@ -1,4 +1,5 @@
-import { Button, Modal, Spin, Tooltip } from 'antd'
+import { Button, Tooltip } from 'antd'
+import Loading from '../Loading'
 import useConnectButton from './useConnectButton'
 
 interface ConnectButtonProps {
@@ -13,9 +14,15 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
     <Tooltip
       placement="bottom"
       title={
-        <div className="flex flex-col">
-          <strong>Connected to:</strong>
-          <span>{walletAddress}</span>
+        <div className="space-y-4">
+          <div className="flex flex-col">
+            <strong>Connected to:</strong>
+            <span>{walletAddress}</span>
+          </div>
+          <div className="flex space-x-1">
+            <strong>Balance:</strong>
+            <span>100</span>
+          </div>
         </div>
       }
     >
@@ -30,16 +37,11 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
       <Button onClick={clickConnect} className="max-w-[200px]">
         {ButtonContent}
       </Button>
-      <Modal
-        open={connecting}
-        footer={null}
-        closable={false}
+      <Loading
+        show={connecting}
         title="Connecting to a wallet..."
-      >
-        <div className="p-4 text-center">
-          <Spin size="large" tip="Please wait" />
-        </div>
-      </Modal>
+        tip="Please wait"
+      />
     </div>
   )
 }
