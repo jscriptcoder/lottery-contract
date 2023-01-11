@@ -7,34 +7,32 @@ import {
   type MouseEventHandler,
   type ChangeEventHandler,
 } from 'react'
-import { useWalletContext } from '../../state/Wallet'
-import {
-  enterLottery,
-  getPlayers,
-  getContractBalance,
-} from '../../utils/lotteryContract'
+import { useAppContext } from '../../context/AppState'
+import { enterLottery, getContractBalance } from '../../utils/LotteryContract'
 
 export default function useContent() {
-  const [prizePot, setPrizePot] = useState(0) // amount in ether
   const [entering, setEntering] = useState(false)
-  const [hasEntered, setHasEntered] = useState(false)
   const [ether, setEther] = useState('0.01')
-  const [walletAddress] = useWalletContext()
+  const [appState, appDispatch] = useAppContext()
 
-  const isConnected = useMemo(() => Boolean(walletAddress), [walletAddress])
+  const isConnected = useMemo(
+    () => Boolean(appState.address),
+    [appState.address],
+  )
 
   const clickEnter: MouseEventHandler<HTMLButtonElement> =
     useCallback(async () => {
       if (isConnected) {
         setEntering(true)
         try {
-          await enterLottery(walletAddress, ether)
+          await enterLottery(appState.address, ether)
+          const contractBalance = await getContractBalance()
 
-          setHasEntered(true)
+          appDispatch({ hasEntered: true, contractBalance })
 
           notification.success({
             message: 'Successful transaction.',
-            description: `Congratulations. You have entered the Lottery with ${ether} ethers. Good luck!!`,
+            description: `Congratulations. You have entered the Lottery with ${ether} ETH. Good luck!!`,
           })
         } catch (err) {
           console.error(err)
@@ -47,7 +45,7 @@ export default function useContent() {
           setEntering(false)
         }
       }
-    }, [isConnected, walletAddress, ether])
+    }, [isConnected, appState.address, ether])
 
   const changeEther: ChangeEventHandler<HTMLInputElement> = useCallback(
     ({ target }) => {
@@ -57,20 +55,15 @@ export default function useContent() {
   )
 
   useEffect(() => {
-    getContractBalance().then((balance) => setPrizePot(parseFloat(balance)))
-
-    getPlayers(walletAddress).then((players) => {
-      if (players.includes(walletAddress)) {
-        setHasEntered(true)
-      }
-    })
-  }, [walletAddress])
+    getContractBalance().then((contractBalance) =>
+      appDispatch({ contractBalance }),
+    )
+  }, [])
 
   return {
     ether,
     entering,
-    prizePot,
-    hasEntered,
+    appState,
     isConnected,
     clickEnter,
     changeEther,

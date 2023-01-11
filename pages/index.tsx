@@ -2,7 +2,7 @@ import { Layout, ConfigProvider, theme } from 'antd'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Content from '../components/Content'
-import { WalletContextProvider } from '../state/Wallet'
+import { AppContextProvider } from '../context/AppState'
 
 const { darkAlgorithm } = theme
 const darkTheme = {
@@ -16,13 +16,13 @@ const darkTheme = {
 export default function Index() {
   return (
     <ConfigProvider theme={darkTheme}>
-      <WalletContextProvider>
+      <AppContextProvider>
         <Layout className="h-full">
           <Header title="Lottery Contract" />
           <Content />
           <Footer />
         </Layout>
-      </WalletContextProvider>
+      </AppContextProvider>
     </ConfigProvider>
   )
 }

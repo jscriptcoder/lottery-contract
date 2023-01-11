@@ -1,13 +1,20 @@
 import { notification } from 'antd'
 import { useCallback, useMemo, useState } from 'react'
-import { useWalletContext } from '../../state/Wallet'
-import { requestAccounts } from '../../utils/lotteryContract'
+import { useAppContext } from '../../context/AppState'
+import {
+  getBalance,
+  getPlayers,
+  requestAccounts,
+} from '../../utils/LotteryContract'
 
 export default function useConnectButton() {
   const [connecting, setConnecting] = useState(false)
-  const [walletAddress, setWalletState] = useWalletContext()
+  const [appState, appDispatch] = useAppContext()
 
-  const isConnected = useMemo(() => Boolean(walletAddress), [walletAddress])
+  const isConnected = useMemo(
+    () => Boolean(appState.address),
+    [appState.address],
+  )
 
   const clickConnect = useCallback(async () => {
     if (!isConnected) {
@@ -15,7 +22,12 @@ export default function useConnectButton() {
 
       try {
         const accounts = await requestAccounts()
-        setWalletState(accounts[0])
+        const address = accounts[0]
+        const balance = await getBalance(address)
+        const players = await getPlayers(address)
+        const hasEntered = players.includes(address)
+
+        appDispatch({ address, balance, hasEntered })
 
         notification.success({
           message: 'Successful connection.',
@@ -35,9 +47,9 @@ export default function useConnectButton() {
   }, [])
 
   return {
+    appState,
     connecting,
     isConnected,
-    walletAddress,
     clickConnect,
   }
 }

@@ -11,13 +11,21 @@ const web3 = new Web3(Web3.givenProvider || devProvider)
 
 const lotteryContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
 
+export function getContractAddress(): string {
+  return CONTRACT_ADDRESS
+}
+
 export async function requestAccounts(): Promise<string[]> {
   return web3.eth.requestAccounts()
 }
 
-export async function getContractBalance(): Promise<string> {
-  const balanceWei = await web3.eth.getBalance(CONTRACT_ADDRESS)
+export async function getBalance(address: string): Promise<string> {
+  const balanceWei = await web3.eth.getBalance(address)
   return web3.utils.fromWei(balanceWei)
+}
+
+export async function getContractBalance(): Promise<string> {
+  return getBalance(CONTRACT_ADDRESS)
 }
 
 export async function enterLottery(

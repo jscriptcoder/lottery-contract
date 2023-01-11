@@ -5,20 +5,13 @@ import useContent from './useContent'
 import Loading from '../Loading'
 
 export default function Content() {
-  const {
-    ether,
-    entering,
-    prizePot,
-    hasEntered,
-    isConnected,
-    clickEnter,
-    changeEther,
-  } = useContent()
+  const { ether, entering, appState, isConnected, clickEnter, changeEther } =
+    useContent()
 
   let formBox
 
   if (isConnected) {
-    if (!hasEntered) {
+    if (!appState.hasEntered) {
       // User has connected his/her wallet and has not yet participated.
       // We're ready let him/her in.
       formBox = (
@@ -99,7 +92,9 @@ export default function Content() {
         <div className="glass-box">
           <Typography.Title className="text-shadow">Prize Pot</Typography.Title>
           <div className="flex space-x-4 flex-1 items-center">
-            <span className="text-neon text-9xl">{prizePot.toFixed(2)}</span>
+            <span className="text-neon text-9xl">
+              {appState.contractBalance}
+            </span>
             <Image
               alt="Ethereum logo"
               src="/ethereum-diamond-logo.svg"

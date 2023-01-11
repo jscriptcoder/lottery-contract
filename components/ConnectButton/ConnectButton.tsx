@@ -7,8 +7,7 @@ interface ConnectButtonProps {
 }
 
 export default function ConnectButton({ label }: ConnectButtonProps) {
-  const { connecting, isConnected, walletAddress, clickConnect } =
-    useConnectButton()
+  const { appState, connecting, isConnected, clickConnect } = useConnectButton()
 
   const ButtonContent = isConnected ? (
     <Tooltip
@@ -17,16 +16,16 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
         <div className="space-y-4">
           <div className="flex flex-col">
             <strong>Connected to:</strong>
-            <span>{walletAddress}</span>
+            <span>{appState.address}</span>
           </div>
           <div className="flex space-x-1">
             <strong>Balance:</strong>
-            <span>100</span>
+            <span>{appState.balance} ETH</span>
           </div>
         </div>
       }
     >
-      <span className="truncate w-full">{walletAddress}</span>
+      <span className="truncate w-full">{appState.address}</span>
     </Tooltip>
   ) : (
     <span>{label}</span>
