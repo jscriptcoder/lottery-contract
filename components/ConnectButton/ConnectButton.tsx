@@ -1,4 +1,4 @@
-import { Button, Tooltip } from 'antd'
+import { Button, Divider, Tooltip } from 'antd'
 import Loading from '../Loading'
 import useConnectButton from './useConnectButton'
 
@@ -13,14 +13,15 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
     <Tooltip
       placement="bottom"
       title={
-        <div className="space-y-4">
+        <div>
           <div className="flex flex-col">
             <strong>Connected to:</strong>
-            <span>{appState.address}</span>
+            <span className="text-xs">{appState.address}</span>
           </div>
-          <div className="flex space-x-1">
+          <Divider className="my-2" />
+          <div className="flex space-x-1 items-center">
             <strong>Balance:</strong>
-            <span>{appState.balance} ETH</span>
+            <span className="text-xs">{appState.balance} ETH</span>
           </div>
         </div>
       }

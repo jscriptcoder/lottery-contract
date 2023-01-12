@@ -3,9 +3,10 @@ import { Alert, Layout, Typography } from 'antd'
 import { LoginOutlined } from '@ant-design/icons'
 import useContent from './useContent'
 import Loading from '../Loading'
+import { toPrice } from '../../utils/numeral'
 
 export default function Content() {
-  const { ether, entering, appState, isConnected, clickEnter, changeEther } =
+  const { ether, entering, appState, isConnected, confirmEnter, changeEther } =
     useContent()
 
   let formBox
@@ -23,17 +24,10 @@ export default function Content() {
             <div className="input flex p-2 space-x-4">
               <input
                 type="number"
-                className="
-              bg-transparent
-              outline-none
-              text-center
-              font-bold
-              text-2xl 
-              text-[#001529] 
-              flex-1
-            "
+                className="bg-transparent outline-none text-center font-bold text-2xl text-[#001529] flex-1"
                 value={ether}
                 onChange={changeEther}
+                step={0.01}
               />
               <div>
                 <Image
@@ -50,7 +44,7 @@ export default function Content() {
             <button
               type="button"
               className="button text-center font-bold text-4xl px-8 py-4 text-slate-100 space-x-4"
-              onClick={clickEnter}
+              onClick={confirmEnter}
               disabled={entering}
             >
               <span>Enter</span>
@@ -92,13 +86,13 @@ export default function Content() {
         <div className="glass-box">
           <Typography.Title className="text-shadow">Prize Pot</Typography.Title>
           <div className="flex space-x-4 flex-1 items-center">
-            <span className="text-neon text-9xl">
-              {appState.contractBalance}
+            <span className="text-neon text-8xl">
+              {toPrice(appState.contractBalance)}
             </span>
             <Image
               alt="Ethereum logo"
               src="/ethereum-diamond-logo.svg"
-              width={60}
+              width={54}
               height={0}
             />
           </div>

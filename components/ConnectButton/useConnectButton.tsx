@@ -31,7 +31,13 @@ export default function useConnectButton() {
 
         notification.success({
           message: 'Successful connection.',
-          description: `Your wallet is now connected.`,
+          // description: `Your wallet is now connected.`,
+          description: (
+            <div>
+              Your wallet, with balance <strong>{balance} ETH</strong>, is now
+              connected.
+            </div>
+          ),
         })
       } catch (err) {
         console.error(err)

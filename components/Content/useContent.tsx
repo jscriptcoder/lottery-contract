@@ -1,4 +1,5 @@
-import { notification } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { Modal, notification } from 'antd'
 import {
   useCallback,
   useEffect,
@@ -32,7 +33,12 @@ export default function useContent() {
 
           notification.success({
             message: 'Successful transaction.',
-            description: `Congratulations. You have entered the Lottery with ${ether} ETH. Good luck!!`,
+            description: (
+              <div>
+                Congratulations. You have just entered the Lottery Contract with{' '}
+                <strong>{ether} ETH</strong>. Good luck!!
+              </div>
+            ),
           })
         } catch (err) {
           console.error(err)
@@ -46,6 +52,22 @@ export default function useContent() {
         }
       }
     }, [isConnected, appState.address, ether])
+
+  const confirmEnter = useCallback(() => {
+    Modal.confirm({
+      title: 'Confirm transaction',
+      content: (
+        <div>
+          You are about to enter the Lottery Contract with{' '}
+          <strong>{ether} ETH</strong>. Would you like to proceed?
+        </div>
+      ),
+      okText: 'Yes',
+      okType: 'default',
+      cancelText: 'No',
+      onOk: clickEnter,
+    })
+  }, [ether])
 
   const changeEther: ChangeEventHandler<HTMLInputElement> = useCallback(
     ({ target }) => {
@@ -65,7 +87,7 @@ export default function useContent() {
     entering,
     appState,
     isConnected,
-    clickEnter,
+    confirmEnter,
     changeEther,
   }
 }
