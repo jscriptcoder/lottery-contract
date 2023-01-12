@@ -1,14 +1,14 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Modal, notification } from 'antd'
 import {
   useCallback,
   useEffect,
   useMemo,
   useState,
-  type MouseEventHandler,
   type ChangeEventHandler,
 } from 'react'
+import { EventData } from 'web3-eth-contract'
 import { useAppContext } from '../../context/AppState'
+import emitter from '../../utils/emitter'
 import {
   enterLottery,
   getContractBalance,
@@ -123,6 +123,27 @@ export default function useContent() {
     getContractBalance().then((contractBalance) =>
       appDispatch({ contractBalance }),
     )
+
+    const onErrorPickingWinner = (error: Error) => {
+      console.error(error)
+
+      notification.error({
+        message: 'Something went wrong',
+        description: `${error}`,
+      })
+    }
+
+    const onWinnerPicked = (event: EventData) => {
+      const { returnValues } = event
+    }
+
+    emitter.on('error-picking-winner', onErrorPickingWinner)
+    emitter.on('winner-picked', onWinnerPicked)
+
+    return () => {
+      emitter.off('error-picking-winner', onErrorPickingWinner)
+      emitter.off('error-picking-winner', onWinnerPicked)
+    }
   }, [])
 
   return {

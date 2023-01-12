@@ -1,6 +1,7 @@
 import Web3 from 'web3'
 import { EventData } from 'web3-eth-contract'
 import lotteryConfig from '../build/contracts/Lottery.json'
+import emitter from './emitter'
 
 const devProvider = 'http://127.0.0.1:7545'
 
@@ -13,8 +14,11 @@ const web3 = new Web3(Web3.givenProvider || devProvider)
 const lotteryContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
 
 lotteryContract.events.WinnerPicked((error: Error, event: EventData) => {
-  const { returnValues } = event
-  console.log(returnValues)
+  if (error) {
+    emitter.emit('error-picking-winner', error)
+  } else {
+    emitter.emit('winner-picked', event)
+  }
 })
 
 export function getContractAddress(): string {
