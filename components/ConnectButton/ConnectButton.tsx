@@ -1,4 +1,6 @@
-import { Button, Divider, Tooltip } from 'antd'
+import { CheckCircleFilled, LogoutOutlined } from '@ant-design/icons'
+import { Button, Divider, Popover, Tooltip } from 'antd'
+import { truncateAddress } from '../../utils/strings'
 import Loading from '../Loading'
 import useConnectButton from './useConnectButton'
 
@@ -7,15 +9,16 @@ interface ConnectButtonProps {
 }
 
 export default function ConnectButton({ label }: ConnectButtonProps) {
-  const { appState, connecting, isConnected, clickConnect } = useConnectButton()
+  const { appState, connecting, clickConnect, clickDisconnect } =
+    useConnectButton()
 
-  const ButtonContent = isConnected ? (
-    <Tooltip
+  const ButtonContent = appState.address ? (
+    <Popover
       placement="bottom"
-      title={
+      content={
         <div>
           <div className="flex flex-col">
-            <strong>Connected to:</strong>
+            <strong>Wallet address:</strong>
             <span className="text-xs">{appState.address}</span>
           </div>
           <Divider className="my-2" />
@@ -23,20 +26,33 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
             <strong>Balance:</strong>
             <span className="text-xs">{appState.balance} ETH</span>
           </div>
+          {/* <Divider className="my-2" />
+          <div className="flex justify-center">
+            <Button
+              className="flex items-center"
+              type="dashed"
+              onClick={clickDisconnect}
+            >
+              <span>Disconnect</span>
+              <LogoutOutlined />
+            </Button>
+          </div> */}
         </div>
       }
     >
-      <span className="truncate w-full">{appState.address}</span>
-    </Tooltip>
+      <span className="w-full space-x-2 flex items-center">
+        <CheckCircleFilled />
+        <strong>Connected to: </strong>
+        <span>{truncateAddress(appState.address, 12)}</span>
+      </span>
+    </Popover>
   ) : (
     <span>{label}</span>
   )
 
   return (
     <div>
-      <Button onClick={clickConnect} className="max-w-[200px]">
-        {ButtonContent}
-      </Button>
+      <Button onClick={clickConnect}>{ButtonContent}</Button>
       <Loading
         show={connecting}
         title="Connecting to a wallet..."

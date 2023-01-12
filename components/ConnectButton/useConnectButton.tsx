@@ -11,13 +11,8 @@ export default function useConnectButton() {
   const [connecting, setConnecting] = useState(false)
   const [appState, appDispatch] = useAppContext()
 
-  const isConnected = useMemo(
-    () => Boolean(appState.address),
-    [appState.address],
-  )
-
   const clickConnect = useCallback(async () => {
-    if (!isConnected) {
+    if (!appState.address) {
       setConnecting(true)
 
       try {
@@ -31,7 +26,6 @@ export default function useConnectButton() {
 
         notification.success({
           message: 'Successful connection.',
-          // description: `Your wallet is now connected.`,
           description: (
             <div>
               Your wallet, with balance <strong>{balance} ETH</strong>, is now
@@ -50,12 +44,14 @@ export default function useConnectButton() {
         setConnecting(false)
       }
     }
-  }, [])
+  }, [appState.address])
+
+  const clickDisconnect = useCallback(async () => {}, [appState.address])
 
   return {
     appState,
     connecting,
-    isConnected,
     clickConnect,
+    clickDisconnect,
   }
 }

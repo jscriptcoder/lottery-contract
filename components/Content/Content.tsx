@@ -61,7 +61,21 @@ export default function Content() {
     } else {
       // User is connected but has already participated in the lottery.
       // We inform the user of his/her participation.
-      formBox = <div className="flex h-full items-center">TODO</div>
+      formBox = (
+        <Typography.Title
+          level={3}
+          className="flex flex-col h-full justify-center text-center !text-[#001529] input !m-0 space-y-8 overflow-auto"
+        >
+          <div>
+            You've entered the Lottery Contract. Soon the Manager will randomly
+            pick a winner.
+          </div>
+          <div className="text-4xl space-y-4">
+            <div>🎉 Good luck!! 🎊</div>
+            <div>🥳</div>
+          </div>
+        </Typography.Title>
+      )
     }
   } else {
     // At this point the user has not yet connected his/her wallet.
