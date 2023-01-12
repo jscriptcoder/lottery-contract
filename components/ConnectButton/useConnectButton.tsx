@@ -1,8 +1,9 @@
-import { notification } from 'antd'
-import { useCallback, useMemo, useState } from 'react'
+import { Modal, notification } from 'antd'
+import { useCallback, useState } from 'react'
 import { useAppContext } from '../../context/AppState'
 import {
   getBalance,
+  getContractOwner,
   getPlayers,
   requestAccounts,
 } from '../../utils/LotteryContract'
@@ -18,11 +19,16 @@ export default function useConnectButton() {
       try {
         const accounts = await requestAccounts()
         const address = accounts[0]
+
         const balance = await getBalance(address)
         const players = await getPlayers(address)
+
         const hasEntered = players.includes(address)
 
-        appDispatch({ address, balance, hasEntered })
+        const owner = await getContractOwner()
+        const isManager = owner === address
+
+        appDispatch({ address, balance, hasEntered, isManager })
 
         notification.success({
           message: 'Successful connection.',
@@ -46,7 +52,14 @@ export default function useConnectButton() {
     }
   }, [appState.address])
 
-  const clickDisconnect = useCallback(async () => {}, [appState.address])
+  const clickDisconnect = useCallback(async () => {
+    Modal.info({
+      content: 'Not yet implemented',
+      footer: null,
+      closable: true,
+      maskClosable: true,
+    })
+  }, [appState.address])
 
   return {
     appState,

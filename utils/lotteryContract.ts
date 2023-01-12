@@ -1,4 +1,5 @@
 import Web3 from 'web3'
+import { EventData } from 'web3-eth-contract'
 import lotteryConfig from '../build/contracts/Lottery.json'
 
 const devProvider = 'http://127.0.0.1:7545'
@@ -10,6 +11,11 @@ const CONTRACT_ADDRESS = lotteryConfig.networks[5777].address
 const web3 = new Web3(Web3.givenProvider || devProvider)
 
 const lotteryContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
+
+lotteryContract.events.WinnerPicked((error: Error, event: EventData) => {
+  const { returnValues } = event
+  console.log(returnValues)
+})
 
 export function getContractAddress(): string {
   return CONTRACT_ADDRESS
@@ -28,6 +34,10 @@ export async function getContractBalance(): Promise<string> {
   return getBalance(CONTRACT_ADDRESS)
 }
 
+export async function getContractOwner(): Promise<string> {
+  return lotteryContract.methods.owner().call()
+}
+
 export async function enterLottery(
   from: string,
   ether: string,
@@ -44,4 +54,10 @@ export async function getPlayers(from: string): Promise<string[]> {
   }
 
   return []
+}
+
+export async function pickWinner(from: string): Promise<void> {
+  if (from) {
+    return lotteryContract.methods.pickWinner().send({ from })
+  }
 }

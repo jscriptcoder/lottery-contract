@@ -10,6 +10,7 @@ import {
 export interface State {
   address: string
   balance: string
+  isManager: boolean
   hasEntered: boolean
   contractBalance: string
 }
@@ -26,6 +27,7 @@ export interface Action {
 const initialState: State = {
   address: '',
   balance: '',
+  isManager: false,
   hasEntered: false,
   contractBalance: '',
 }

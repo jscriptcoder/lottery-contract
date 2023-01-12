@@ -1,5 +1,5 @@
 import { CheckCircleFilled, LogoutOutlined } from '@ant-design/icons'
-import { Button, Divider, Popover, Tooltip } from 'antd'
+import { Button, Divider, Popover } from 'antd'
 import { truncateAddress } from '../../utils/strings'
 import Loading from '../Loading'
 import useConnectButton from './useConnectButton'
@@ -26,7 +26,7 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
             <strong>Balance:</strong>
             <span className="text-xs">{appState.balance} ETH</span>
           </div>
-          {/* <Divider className="my-2" />
+          <Divider className="my-2" />
           <div className="flex justify-center">
             <Button
               className="flex items-center"
@@ -36,7 +36,7 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
               <span>Disconnect</span>
               <LogoutOutlined />
             </Button>
-          </div> */}
+          </div>
         </div>
       }
     >

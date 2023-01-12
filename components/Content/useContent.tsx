@@ -9,10 +9,14 @@ import {
   type ChangeEventHandler,
 } from 'react'
 import { useAppContext } from '../../context/AppState'
-import { enterLottery, getContractBalance } from '../../utils/LotteryContract'
+import {
+  enterLottery,
+  getContractBalance,
+  pickWinner,
+} from '../../utils/LotteryContract'
 
 export default function useContent() {
-  const [entering, setEntering] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [ether, setEther] = useState('0.01')
   const [appState, appDispatch] = useAppContext()
 
@@ -21,37 +25,36 @@ export default function useContent() {
     [appState.address],
   )
 
-  const clickEnter: MouseEventHandler<HTMLButtonElement> =
-    useCallback(async () => {
-      if (isConnected) {
-        setEntering(true)
-        try {
-          await enterLottery(appState.address, ether)
-          const contractBalance = await getContractBalance()
+  const enterOk = useCallback(async () => {
+    if (isConnected) {
+      setLoading(true)
+      try {
+        await enterLottery(appState.address, ether)
+        const contractBalance = await getContractBalance()
 
-          appDispatch({ hasEntered: true, contractBalance })
+        appDispatch({ hasEntered: true, contractBalance })
 
-          notification.success({
-            message: 'Successful transaction.',
-            description: (
-              <div>
-                Congratulations. You have just entered the Lottery Contract with{' '}
-                <strong>{ether} ETH</strong>. Good luck!!
-              </div>
-            ),
-          })
-        } catch (err) {
-          console.error(err)
+        notification.success({
+          message: 'Successful transaction.',
+          description: (
+            <div>
+              Congratulations. You have just entered the Lottery Contract with{' '}
+              <strong>{ether} ETH</strong>. Good luck!!
+            </div>
+          ),
+        })
+      } catch (err) {
+        console.error(err)
 
-          notification.error({
-            message: 'Something went wrong',
-            description: `${err}`,
-          })
-        } finally {
-          setEntering(false)
-        }
+        notification.error({
+          message: 'Something went wrong',
+          description: `${err}`,
+        })
+      } finally {
+        setLoading(false)
       }
-    }, [isConnected, appState.address, ether])
+    }
+  }, [isConnected, appState.address, ether])
 
   const confirmEnter = useCallback(() => {
     Modal.confirm({
@@ -65,9 +68,9 @@ export default function useContent() {
       okText: 'Yes',
       okType: 'default',
       cancelText: 'No',
-      onOk: clickEnter,
+      onOk: enterOk,
     })
-  }, [ether])
+  }, [ether, enterOk])
 
   const changeEther: ChangeEventHandler<HTMLInputElement> = useCallback(
     ({ target }) => {
@@ -75,6 +78,46 @@ export default function useContent() {
     },
     [],
   )
+
+  const pickWinnerOk = useCallback(async () => {
+    if (isConnected && appState.isManager) {
+      setLoading(true)
+      try {
+        await pickWinner(appState.address)
+        const contractBalance = await getContractBalance()
+
+        appDispatch({ hasEntered: true, contractBalance })
+
+        // TODO
+      } catch (err) {
+        console.error(err)
+
+        notification.error({
+          message: 'Something went wrong',
+          description: `${err}`,
+        })
+      } finally {
+        setLoading(false)
+      }
+    }
+  }, [isConnected, appState.isManager, appState.address])
+
+  const confirmPickWinner = useCallback(() => {
+    Modal.confirm({
+      title: 'Confirm end of game',
+      content: (
+        <div>
+          You are about to pick a winner for the Lottery Contract with a prize
+          pot of <strong>{appState.contractBalance} ETH</strong>. Would you like
+          to proceed?
+        </div>
+      ),
+      okText: 'Yes',
+      okType: 'default',
+      cancelText: 'No',
+      onOk: pickWinnerOk,
+    })
+  }, [appState.contractBalance, pickWinnerOk])
 
   useEffect(() => {
     getContractBalance().then((contractBalance) =>
@@ -84,10 +127,11 @@ export default function useContent() {
 
   return {
     ether,
-    entering,
+    loading,
     appState,
     isConnected,
-    confirmEnter,
     changeEther,
+    confirmEnter,
+    confirmPickWinner,
   }
 }
