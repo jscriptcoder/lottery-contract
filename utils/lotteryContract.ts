@@ -9,9 +9,12 @@ const CONTRACT_ABI = lotteryConfig.abi as unknown as AbiItem
 
 const CONTRACT_ADDRESS = lotteryConfig.networks[5777].address
 
-const web3 = new Web3(Web3.givenProvider || devProvider)
+export const web3 = new Web3(Web3.givenProvider || devProvider)
 
-const lotteryContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
+export const lotteryContract = new web3.eth.Contract(
+  CONTRACT_ABI,
+  CONTRACT_ADDRESS,
+)
 
 lotteryContract.events.WinnerPicked((error: Error, event: EventData) => {
   if (error) {
@@ -71,6 +74,25 @@ export async function pickWinner(from: string): Promise<void> {
   }
 }
 
-export function fromWei(wei: string): string {
-  return web3.utils.fromWei(wei)
+export async function getContractDetails(address: string) {
+  const [balance, players, owner, contractBalance] = await Promise.all([
+    getBalance(address),
+    getPlayers(address),
+    getContractOwner(),
+    getContractBalance(),
+  ])
+
+  const participants = players.length
+  const hasEntered = players.includes(address)
+  const isManager = owner === address
+
+  return {
+    owner,
+    players,
+    balance,
+    isManager,
+    hasEntered,
+    participants,
+    contractBalance,
+  }
 }

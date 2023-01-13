@@ -11,17 +11,40 @@ import { useAppContext } from '../../context/AppState'
 import emitter from '../../utils/emitter'
 import {
   enterLottery,
-  fromWei,
   getContractBalance,
+  getContractDetails,
   numPlayers,
   pickWinner,
+  web3,
 } from '../../utils/LotteryContract'
 import type { Winner } from '../WinnerMask/WinnerMask'
+
+function notifySuccessfulTransaction(ether: string): void {
+  notification.success({
+    message: 'Successful transaction.',
+    description: (
+      <div>
+        Congratulations. You have just entered the Lottery Contract with{' '}
+        <strong>{ether} ETH</strong>. Good luck!!
+      </div>
+    ),
+  })
+}
+
+// TODO: we have same function in ConnectButton component.
+//       Refactor and reuse.
+function notifySomethingWentWrong(error: unknown): void {
+  notification.error({
+    message: 'Something went wrong',
+    description: `${error}`,
+  })
+}
 
 export default function useContent() {
   const [loading, setLoading] = useState(false)
   const [ether, setEther] = useState('0.01')
   const [winner, setWinner] = useState<Winner>()
+
   const [appState, appDispatch] = useAppContext()
 
   const isConnected = useMemo(
@@ -34,27 +57,19 @@ export default function useContent() {
       setLoading(true)
       try {
         await enterLottery(appState.address, ether)
-        const contractBalance = await getContractBalance()
-        const participants = await numPlayers(appState.address)
 
-        appDispatch({ hasEntered: true, participants, contractBalance })
+        // After the user enters the lottery, we need to
+        // make updates in the UI and notify about the transaction.
+        const { balance, hasEntered, participants, contractBalance } =
+          await getContractDetails(appState.address)
 
-        notification.success({
-          message: 'Successful transaction.',
-          description: (
-            <div>
-              Congratulations. You have just entered the Lottery Contract with{' '}
-              <strong>{ether} ETH</strong>. Good luck!!
-            </div>
-          ),
-        })
+        appDispatch({ balance, hasEntered, participants, contractBalance })
+
+        notifySuccessfulTransaction(ether)
       } catch (err) {
         console.error(err)
 
-        notification.error({
-          message: 'Something went wrong',
-          description: `${err}`,
-        })
+        notifySomethingWentWrong(err)
       } finally {
         setLoading(false)
       }
@@ -89,9 +104,15 @@ export default function useContent() {
       setLoading(true)
       try {
         await pickWinner(appState.address)
-        const contractBalance = await getContractBalance()
 
-        appDispatch({ hasEntered: true, contractBalance })
+        // After picking a winner, contract's state is reset,
+        // and we need to also update the UI.
+        // Question is:
+        //   do we reset the UI manually or we query the contract?
+        const { balance, hasEntered, participants, contractBalance } =
+          await getContractDetails(appState.address)
+
+        appDispatch({ balance, hasEntered, participants, contractBalance })
 
         // TODO
       } catch (err) {
@@ -142,7 +163,7 @@ export default function useContent() {
       const { returnValues } = event
       setWinner({
         address: returnValues['winner'],
-        prize: fromWei(returnValues['prize']),
+        prize: web3.utils.fromWei(returnValues['prize']),
       })
     }
 

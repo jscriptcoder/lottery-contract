@@ -1,8 +1,6 @@
-import { WalletOutlined } from '@ant-design/icons'
 import { Fireworks } from '@fireworks-js/react'
-import { Button, Descriptions, Typography } from 'antd'
+import { Typography } from 'antd'
 import Image from 'next/image'
-import { ReactNode } from 'react'
 import { toPrice } from '../../utils/numeral'
 
 export interface Winner {
@@ -33,6 +31,7 @@ export default function WinnerMask({ winner }: WinnerMaskProps) {
               <div>🥳</div>
             </div>
           </Typography.Title>
+
           <Typography.Title
             level={2}
             className="flex flex-col justify-center items-center space-y-4 text-redish-shadow"
