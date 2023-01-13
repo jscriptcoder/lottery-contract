@@ -57,4 +57,8 @@
 
     @apply text-[#FFF]/[.85];
   }
+
+  .text-redish-shadow {
+    text-shadow: 2px 2px 5px #fe6839;
+  }
 }

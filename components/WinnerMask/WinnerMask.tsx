@@ -35,7 +35,7 @@ export default function WinnerMask({ winner }: WinnerMaskProps) {
           </Typography.Title>
           <Typography.Title
             level={2}
-            className="flex flex-col justify-center items-center space-y-4"
+            className="flex flex-col justify-center items-center space-y-4 text-redish-shadow"
           >
             <div className="flex space-x-4 flex-1 items-center">
               <span className="text-8xl">{toPrice(winner.prize)}</span>
