@@ -22,13 +22,14 @@ export default function useConnectButton() {
 
         const balance = await getBalance(address)
         const players = await getPlayers(address)
+        const participants = players.length
 
         const hasEntered = players.includes(address)
 
         const owner = await getContractOwner()
         const isManager = owner === address
 
-        appDispatch({ address, balance, hasEntered, isManager })
+        appDispatch({ address, balance, hasEntered, isManager, participants })
 
         notification.success({
           message: 'Successful connection.',

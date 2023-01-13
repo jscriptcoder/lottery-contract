@@ -12,6 +12,7 @@ export interface State {
   balance: string
   isManager: boolean
   hasEntered: boolean
+  participants: number
   contractBalance: string
 }
 
@@ -29,6 +30,7 @@ const initialState: State = {
   balance: '',
   isManager: false,
   hasEntered: false,
+  participants: 0,
   contractBalance: '',
 }
 

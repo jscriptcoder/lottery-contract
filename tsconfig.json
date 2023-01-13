@@ -17,6 +17,11 @@
     "types": ["@types/node", "@types/chai", "@types/mocha"],
     "typeRoots": ["./node_modules/@types", "./types"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/WinnerModal/WinnerModal.tsx"
+  ],
   "exclude": ["node_modules", "build", "cache", "artifacts"]
 }

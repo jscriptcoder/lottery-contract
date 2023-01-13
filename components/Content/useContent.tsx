@@ -11,13 +11,17 @@ import { useAppContext } from '../../context/AppState'
 import emitter from '../../utils/emitter'
 import {
   enterLottery,
+  fromWei,
   getContractBalance,
+  numPlayers,
   pickWinner,
 } from '../../utils/LotteryContract'
+import type { Winner } from '../WinnerMask/WinnerMask'
 
 export default function useContent() {
   const [loading, setLoading] = useState(false)
   const [ether, setEther] = useState('0.01')
+  const [winner, setWinner] = useState<Winner>()
   const [appState, appDispatch] = useAppContext()
 
   const isConnected = useMemo(
@@ -31,8 +35,9 @@ export default function useContent() {
       try {
         await enterLottery(appState.address, ether)
         const contractBalance = await getContractBalance()
+        const participants = await numPlayers(appState.address)
 
-        appDispatch({ hasEntered: true, contractBalance })
+        appDispatch({ hasEntered: true, participants, contractBalance })
 
         notification.success({
           message: 'Successful transaction.',
@@ -135,6 +140,10 @@ export default function useContent() {
 
     const onWinnerPicked = (event: EventData) => {
       const { returnValues } = event
+      setWinner({
+        address: returnValues['winner'],
+        prize: fromWei(returnValues['prize']),
+      })
     }
 
     emitter.on('error-picking-winner', onErrorPickingWinner)
@@ -148,6 +157,7 @@ export default function useContent() {
 
   return {
     ether,
+    winner,
     loading,
     appState,
     isConnected,

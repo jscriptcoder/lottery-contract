@@ -4,10 +4,12 @@ import { LoginOutlined, TrophyOutlined } from '@ant-design/icons'
 import useContent from './useContent'
 import Loading from '../Loading'
 import { toPrice } from '../../utils/numeral'
+import WinnerMask from '../WinnerMask'
 
 export default function Content() {
   const {
     ether,
+    winner,
     loading,
     appState,
     isConnected,
@@ -19,6 +21,7 @@ export default function Content() {
   let actionBox
 
   if (!isConnected) {
+    // User must connect his/her wallet in order to participate.
     actionBox = (
       <div className="flex h-full items-center">
         <Alert
@@ -32,7 +35,6 @@ export default function Content() {
     )
   } else if (appState.hasEntered) {
     // User is connected but has already participated in the lottery.
-    // We inform of his/her participation.
     actionBox = (
       <Typography.Title
         level={3}
@@ -42,9 +44,8 @@ export default function Content() {
           You've entered the Lottery Contract. Soon the Manager will randomly
           pick a winner.
         </div>
-        <div className="text-4xl space-y-4">
-          <div>🎉 Good luck!! 🎊</div>
-          <div>🥳</div>
+        <div className="text-4xl">
+          <div>🤞 Good luck!! 🤞</div>
         </div>
       </Typography.Title>
     )
@@ -114,7 +115,7 @@ export default function Content() {
               height={0}
             />
           </div>
-          {appState.isManager && (
+          {appState.isManager && appState.participants > 1 && (
             <button
               type="button"
               className="button text-center font-bold text-4xl px-8 py-4 text-slate-100 space-x-4"
@@ -127,6 +128,7 @@ export default function Content() {
           )}
         </div>
       </div>
+      <WinnerMask winner={winner} />
     </Layout.Content>
   )
 }

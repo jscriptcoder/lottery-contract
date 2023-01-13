@@ -60,8 +60,17 @@ export async function getPlayers(from: string): Promise<string[]> {
   return []
 }
 
+export async function numPlayers(from: string): Promise<number> {
+  const players = await getPlayers(from)
+  return players.length
+}
+
 export async function pickWinner(from: string): Promise<void> {
   if (from) {
     return lotteryContract.methods.pickWinner().send({ from })
   }
+}
+
+export function fromWei(wei: string): string {
+  return web3.utils.fromWei(wei)
 }
