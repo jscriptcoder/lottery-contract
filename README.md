@@ -16,3 +16,5 @@ Inspired by one of the ideas proposed in the course [Ethereum and Solidity: The 
   - [Ganache](https://trufflesuite.com/ganache/)
   - [Mocha](https://mochajs.org/)
   - [ts-node](https://github.com/TypeStrong/ts-node)
+- Wallet
+  - [MetaMask](https://metamask.io/)
