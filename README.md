@@ -6,6 +6,7 @@ Inspired by one of the ideas proposed in the course [Ethereum and Solidity: The 
 - Frontend
   - [React](https://reactjs.org/) 18.x
   - [Typescript](https://www.typescriptlang.org/)
+  - [Ant Design](https://ant.design/) 5.x
   - [Tailwind.css](https://tailwindcss.com/)
   - [Next.js](https://nextjs.org/) 13.x
 - Backend
