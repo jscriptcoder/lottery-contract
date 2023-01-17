@@ -16,15 +16,6 @@ export interface State {
   contractBalance: string
 }
 
-export enum ActionType {
-  UPDATE,
-}
-
-export interface Action {
-  type: ActionType
-  payload: Partial<State>
-}
-
 const initialState: State = {
   address: '',
   balance: '',
