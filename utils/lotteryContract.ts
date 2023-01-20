@@ -13,9 +13,6 @@ const networkSettings = lotteryConfig.networks as NetworkSettings
 const CONTRACT_ABI = lotteryConfig.abi as unknown as AbiItem
 const CONTRACT_ADDRESS = networkSettings[networkId ?? 5777].address
 
-console.log('Web3.givenProvider', Web3.givenProvider)
-console.log('devProvider', projectUrl)
-
 export const web3 = new Web3(Web3.givenProvider ?? projectUrl)
 
 export const lotteryContract = new web3.eth.Contract(
