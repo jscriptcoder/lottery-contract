@@ -62,7 +62,7 @@ export default function useConnectButton() {
       closable: true,
       maskClosable: true,
     })
-  }, [appState.address])
+  }, [])
 
   return {
     appState,

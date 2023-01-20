@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "generate-types": "typechain --target=truffle-v5 'build/contracts/*.json'",
-    "migrate": "tsc -p ./tsconfig.migrate.json --outDir ./migrations && truffle migrate",
+    "tsc-migrate": "tsc -p ./tsconfig.migrate.json --outDir ./migrations",
+    "premigrate": "npm run tsc-migrate",
+    "migrate": "truffle migrate",
+    "premigrate-goerli": "npm run tsc-migrate",
+    "migrate-goerli": "truffle migrate --network goerli",
     "typecheck": "truffle compile && npm run generate-types && tsc --noEmit",
     "test": "truffle test"
   },

@@ -3,13 +3,20 @@ import { EventData } from 'web3-eth-contract'
 import lotteryConfig from '../build/contracts/Lottery.json'
 import emitter from './emitter'
 
-const devProvider = 'http://127.0.0.1:7545'
+type NetworkSettings = Record<string, { address: string }>
+
+const projectUrl = process.env['NEXT_PUBLIC_PROJECT_URL']
+const networkId = process.env['NEXT_PUBLIC_NETWORK_ID']
+
+const networkSettings = lotteryConfig.networks as NetworkSettings
 
 const CONTRACT_ABI = lotteryConfig.abi as unknown as AbiItem
+const CONTRACT_ADDRESS = networkSettings[networkId ?? 5777].address
 
-const CONTRACT_ADDRESS = lotteryConfig.networks[5777].address
+console.log('Web3.givenProvider', Web3.givenProvider)
+console.log('devProvider', projectUrl)
 
-export const web3 = new Web3(Web3.givenProvider || devProvider)
+export const web3 = new Web3(Web3.givenProvider ?? projectUrl)
 
 export const lotteryContract = new web3.eth.Contract(
   CONTRACT_ABI,
