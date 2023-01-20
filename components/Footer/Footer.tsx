@@ -6,8 +6,8 @@ export default function Footer() {
       Proudly made in 🇪🇸 by{' '}
       <a
         href="https://www.linkedin.com/in/jscriptcoder"
-        target="_blank"
-        rel="noopener"
+        target={'_blank'}
+        rel={'noreferrer'}
       >
         Francisco Ramos
       </a>

@@ -50,7 +50,7 @@ export default function Content() {
           <Typography.Title className="text-shadow">Prize Pot</Typography.Title>
           <div className="flex space-x-4 flex-1 items-center">
             <span className="text-neon text-8xl">
-              {toPrice(appState.contractBalance)}
+              {toPrice(appState.contractBalance, 3)}
             </span>
             <Image
               alt="Ethereum logo"
