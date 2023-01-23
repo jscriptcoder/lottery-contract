@@ -1,6 +1,6 @@
 import Web3 from 'web3'
 import { EventData } from 'web3-eth-contract'
-import lotteryConfig from './contract.json'
+import lotteryJson from './contract.json'
 import emitter from '../emitter'
 
 type NetworkSettings = Record<string, { address: string }>
@@ -8,9 +8,9 @@ type NetworkSettings = Record<string, { address: string }>
 const projectUrl = process.env['NEXT_PUBLIC_PROJECT_URL']
 const networkId = process.env['NEXT_PUBLIC_NETWORK_ID']
 
-const networkSettings = lotteryConfig.networks as NetworkSettings
+const networkSettings = lotteryJson.networks as NetworkSettings
 
-const CONTRACT_ABI = lotteryConfig.abi as unknown as AbiItem
+const CONTRACT_ABI = lotteryJson.abi as unknown as AbiItem
 const CONTRACT_ADDRESS = networkSettings[networkId ?? 5777].address
 
 export const web3 = new Web3(Web3.givenProvider ?? projectUrl)
