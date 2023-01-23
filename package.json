@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
     "generate-types": "typechain --target=truffle-v5 'build/contracts/*.json'",
     "tsc-migrate": "tsc -p ./tsconfig.migrate.json --outDir ./migrations",
     "premigrate": "npm run tsc-migrate",
@@ -14,6 +10,12 @@
     "premigrate-goerli": "npm run tsc-migrate",
     "migrate-goerli": "truffle migrate --network goerli",
     "typecheck": "truffle compile && npm run generate-types && tsc --noEmit",
+    "predev": "truffle compile",
+    "dev": "next dev",
+    "prebuild": "truffle compile",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "test": "truffle test"
   },
   "dependencies": {
