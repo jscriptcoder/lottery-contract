@@ -1,10 +1,7 @@
 import { Modal, notification } from 'antd'
 import { useCallback, useState } from 'react'
 import { useAppContext } from '../../context/appStore'
-import {
-  getContractDetails,
-  requestAccounts,
-} from '../../utils/lotteryContract'
+import { getContractDetails, requestAccounts } from '../../utils/booo'
 
 function notifySuccessfulConnection(balance: string): void {
   notification.success({
