@@ -5,15 +5,16 @@
   "scripts": {
     "generate-types": "typechain --target=truffle-v5 'build/contracts/*.json'",
     "tsc-migrate": "tsc -p ./tsconfig.migrate.json --outDir ./migrations",
+    "contract-json": "cp ./build/contracts/Lottery.json ./utils/lottery/contract.json",
     "premigrate": "npm run tsc-migrate",
     "migrate": "truffle migrate",
+    "postmigrate": "npm run contract-json",
     "premigrate-goerli": "npm run tsc-migrate",
     "migrate-goerli": "truffle migrate --network goerli",
+    "postmigrate-goerli": "npm run contract-json",
     "typecheck": "truffle compile && npm run generate-types && tsc --noEmit",
     "dev": "next dev",
     "build": "next build",
-    "premigrate-build": "npm run migrate-goerli",
-    "migrate-build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "truffle test"

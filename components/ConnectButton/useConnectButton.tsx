@@ -4,7 +4,7 @@ import { useAppContext } from '../../context/appStore'
 import {
   getContractDetails,
   requestAccounts,
-} from '../../utils/lotteryContract'
+} from '../../utils/lottery/contract'
 
 function notifySuccessfulConnection(balance: string): void {
   notification.success({

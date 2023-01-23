@@ -1,7 +1,7 @@
 import Web3 from 'web3'
 import { EventData } from 'web3-eth-contract'
-import lotteryConfig from '../build/contracts/Lottery.json'
-import emitter from './emitter'
+import lotteryConfig from './contract.json'
+import emitter from '../emitter'
 
 type NetworkSettings = Record<string, { address: string }>
 
