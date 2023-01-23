@@ -17,6 +17,7 @@ import {
   pickWinner,
   web3,
 } from '../../utils/LotteryContract'
+import { toPrice } from '../../utils/numeral'
 import type { Winner } from '../WinnerMask/WinnerMask'
 
 function notifySuccessfulTransaction(ether: string): void {
@@ -94,7 +95,7 @@ export default function useContent() {
 
   const changeEther: ChangeEventHandler<HTMLInputElement> = useCallback(
     ({ target }) => {
-      setEther(target.value)
+      setEther(toPrice(target.value))
     },
     [],
   )
