@@ -29,7 +29,7 @@ export default function EnterForm({
             className="bg-transparent outline-none text-center font-bold text-2xl text-[#001529] flex-1"
             value={ether}
             onChange={changeEther}
-            step={0.001}
+            step={0.01}
           />
           <div>
             <Image
@@ -55,7 +55,7 @@ export default function EnterForm({
         <Loading
           show={loading}
           title="Entering competetion..."
-          tip="Please wait for the transaction to be approved"
+          tip="Please, wait for the transaction to be approved"
         />
       </div>
     </>
