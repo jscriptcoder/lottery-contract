@@ -14,6 +14,8 @@
     "dev": "next dev",
     "prebuild": "npm run migrate-goerli",
     "build": "next build",
+    "prebuild-local": "npm run migrate",
+    "build-local": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "truffle test"
