@@ -7,7 +7,7 @@ import {
   type ChangeEventHandler,
 } from 'react'
 import { EventData } from 'web3-eth-contract'
-import { useAppContext } from '../../context/AppState'
+import { useAppContext } from '../../context/blaaa'
 import emitter from '../../utils/emitter'
 import {
   enterLottery,

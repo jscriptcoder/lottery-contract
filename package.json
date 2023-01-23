@@ -10,12 +10,8 @@
     "premigrate-goerli": "npm run tsc-migrate",
     "migrate-goerli": "truffle migrate --network goerli",
     "typecheck": "truffle compile && npm run generate-types && tsc --noEmit",
-    "predev": "truffle migrate",
     "dev": "next dev",
-    "prebuild": "npm run migrate-goerli",
     "build": "next build",
-    "prebuild-local": "npm run migrate",
-    "build-local": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "truffle test"
