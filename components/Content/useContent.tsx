@@ -15,7 +15,7 @@ import {
   getContractDetails,
   pickWinner,
   web3,
-} from '../../utils/booo'
+} from '../../utils/lotteryContract'
 import { toPrice } from '../../utils/numeral'
 import type { Winner } from '../WinnerMask/WinnerMask'
 
