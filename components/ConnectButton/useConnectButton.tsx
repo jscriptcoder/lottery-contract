@@ -1,6 +1,6 @@
 import { Modal, notification } from 'antd'
 import { useCallback, useState } from 'react'
-import { useAppContext } from '../../context/blaaa'
+import { useAppContext } from '../../context/appStore'
 import {
   getContractDetails,
   requestAccounts,
