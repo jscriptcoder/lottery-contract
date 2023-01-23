@@ -11,6 +11,7 @@
     "migrate-goerli": "truffle migrate --network goerli",
     "typecheck": "truffle compile && npm run generate-types && tsc --noEmit",
     "dev": "next dev",
+    "prebuild": "npm run migrate-goerli",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
