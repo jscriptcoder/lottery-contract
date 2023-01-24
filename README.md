@@ -1,6 +1,9 @@
 # Lottery Contract
 
-Inspired by one of the ideas proposed in the course [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/), I decided to build it using latest web3 technologies and improve it with a more engaiging UI. The idea behind this game is to have a prize pool and a list of participants. Each participan will enter the game sending an amount of ether to the contract. The manager (or owner of the contract) decides when to pick a winner. The total ether locked in the contract is then transfered to the lucky one.
+Inspired by one of the ideas proposed in the course [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/), I decided to build it using latest web3 technologies and improve it with a more engaging UI. The idea behind this game is to have a prize pool and a list of participants. Each participan will enter the game sending an amount of ether to the contract. The manager (or owner of the contract) decides when to pick a winner. The total ether locked in the contract is then transfered to the lucky one.
+
+## Demo
+The Frontend is deployed in Vercel: https://lottery-contract-jet.vercel.app/. The contract has been deployed to Goerli testnet, in the following address: [0xEADc1F2999283F3D722aB3A877Afb2b89fEf4bd9](https://goerli.etherscan.io/address/0xEADc1F2999283F3D722aB3A877Afb2b89fEf4bd9)
 
 ## Technologies used
 - Frontend
