@@ -41,7 +41,10 @@
  * https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-dashboard/
  */
 
+// Will helps us to run the test written in Typescript
 require('ts-node').register({ files: true, project: './tsconfig.test.json' })
+
+// Grabs environment variables from .env file
 require('dotenv').config()
 
 const HDWalletProvider = require('@truffle/hdwallet-provider')
