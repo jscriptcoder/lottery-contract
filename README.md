@@ -22,3 +22,6 @@ The Frontend is deployed in Vercel: https://lottery-contract-jet.vercel.app/. Th
   - [ts-node](https://github.com/TypeStrong/ts-node)
 - Wallet
   - [MetaMask](https://metamask.io/)
+
+### Note:
+If you want to know more about this project, go check out this [medium article](https://medium.com/@jscriptcoder/my-first-taste-of-building-a-web3-app-with-solidity-react-and-typescript-32660d44e797) I wrote about it.
