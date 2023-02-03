@@ -172,7 +172,7 @@ export default function useContent() {
 
     return () => {
       emitter.off('error-picking-winner', onErrorPickingWinner)
-      emitter.off('error-picking-winner', onWinnerPicked)
+      emitter.off('winner-picked', onWinnerPicked)
     }
   }, [])
 
