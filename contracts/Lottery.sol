@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.12;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/utils/Strings.sol";
 
@@ -63,7 +63,7 @@ contract Lottery {
      * @return index of the player within our list 
      */
     function random() private view returns (uint) {
-        return uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, players)));
+        return uint(keccak256(abi.encodePacked(block.prevrandao, block.timestamp, players)));
     }
 
     /**
